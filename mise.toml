@@ -1,0 +1,7 @@
+[tasks.check]
+description = "Everything CI runs on every push"
+run = ["mise run dojo"]
+
+[tasks.dojo]
+description = "dojo check: an installed dojo, else the dojo checkout beside this repository, else skipped (CI until peleda-app/dojo is published)"
+run = 'if command -v dojo >/dev/null; then dojo check "$PWD"; elif [ -d ../dojo ]; then mise exec -C ../dojo -- cargo run -q -p dojo -- check "$PWD"; else echo "dojo: skipped, no dojo binary and no ../dojo checkout"; fi'
